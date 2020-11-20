@@ -11,7 +11,13 @@ class Business extends React.Component {
                 <h2>{this.props.business.name}</h2>
                 <div className="Business-information">
                     <div className="Business-address">
-                        <p>{this.props.business.address}</p>
+                        <a
+                            href={`https://www.google.com/maps/@${this.props.business.lat},${this.props.business.lon},21z`}
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            {this.props.business.address}
+                        </a>
                         <p>{this.props.business.city}</p>
                         <p>
                             {this.props.business.state} {this.props.business.zipCode}
