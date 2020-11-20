@@ -25,5 +25,3 @@ Below is a list of some potential features to add to Ravenous:
 -   [] Implement your own type of sort (for example, by entering a distance or radius from a central location)
 -   [] Allow you to search by pressing “Enter” (or “Return”) on your keyboard, as opposed to manually clicking
 -   [] Add autocompletion of addresses to the “Location” input
-
--   [x] fdcd
