@@ -12,6 +12,7 @@ class SearchBar extends React.Component {
             'Best Match': 'best_match',
             'Highest Rated': 'rating',
             'Most Reviewed': 'review_count',
+            Distance: 'distance',
         };
     }
 
@@ -20,6 +21,7 @@ class SearchBar extends React.Component {
     }
     handleSortByChange(sortByOption) {
         this.setState({ sortBy: sortByOption });
+        this.handleSearch();
     }
 
     handleTermChange(e) {
@@ -31,8 +33,12 @@ class SearchBar extends React.Component {
     }
 
     handleSearch(e) {
-        this.props.searchYelp(this.state.term, this.state.location, this.state.sortBy);
-        e.preventDefault();
+        if (e !== undefined) {
+            this.props.searchYelp(this.state.term, this.state.location, this.state.sortBy);
+            e.preventDefault();
+        } else {
+            this.props.searchYelp(this.state.term, this.state.location, this.state.sortBy);
+        }
     }
 
     renderSortByOptions() {
@@ -56,15 +62,17 @@ class SearchBar extends React.Component {
                 <div className="SearchBar-sort-options">
                     <ul>{this.renderSortByOptions()}</ul>
                 </div>
-                <div className="SearchBar-fields">
-                    <input placeholder="Search Businesses" onChange={this.handleTermChange} />
-                    <input placeholder="Where?" onChange={this.handleLocationChange} />
-                </div>
-                <div className="SearchBar-submit">
-                    <a href="#" onClick={this.handleSearch}>
-                        Let's Go
-                    </a>
-                </div>
+                <form>
+                    <div className="SearchBar-fields">
+                        <input placeholder="Search Businesses" onChange={this.handleTermChange} />
+                        <input placeholder="Where?" onChange={this.handleLocationChange} />
+                    </div>
+                    <div className="SearchBar-submit">
+                        <button type="submit" key="submit" onClick={this.handleSearch}>
+                            Let's Go
+                        </button>
+                    </div>
+                </form>
             </div>
         );
     }
