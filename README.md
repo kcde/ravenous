@@ -24,4 +24,4 @@ Below is a list of some potential features to add to Ravenous:
 -   [x] Clicking on a different sorting option automatically requeries the Yelp API, rather than having to manually click “Let’s Go” again
 -   [x] Implement your own type of sort (for example, by entering a distance or radius from a central location)
 -   [x] Allow you to search by pressing “Enter” (or “Return”) on your keyboard, as opposed to manually clicking
--   [ ] Add autocompletion of addresses to the “Location” input
+-   [x] Add autocompletion of addresses to the “Location” input

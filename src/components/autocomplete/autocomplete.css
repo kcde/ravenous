@@ -1,0 +1,15 @@
+.autocomplete {
+    position: absolute;
+    top: 3rem;
+    background-color: white;
+    height: 400px;
+    overflow: scroll;
+}
+
+.autocomplete > * {
+    padding: 1rem;
+    border-bottom: 2px solid #cca353;
+    width: 21rem;
+    font-weight: 300;
+    text-transform: capitalize;
+}

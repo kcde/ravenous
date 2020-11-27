@@ -16,7 +16,6 @@ export const Yelp = {
             .then((jsonResponse) => {
                 if (jsonResponse.businesses) {
                     return jsonResponse.businesses.map((business) => {
-                        console.log(business);
                         return {
                             id: business.id,
                             imageSrc: business.image_url,
@@ -36,39 +35,13 @@ export const Yelp = {
                 }
             });
     },
-};
 
-/*
-// Async method
-export const yelp = {
-    async search(term, location, sortBy) {
-        const response = await fetch(
-            `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}&sort_by=${sortBy}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${apikey}`,
-                },
-            }
+    async autocomplete(prefix) {
+        const req = await fetch(
+            `https://api.allorigins.win/raw?url=https://www.yelp.com/location_suggest/v2?prefix=${prefix}`
         );
-        const jsonResponse = await response.json();
-        if (jsonResponse.businesses) {
-            jsonResponse.businesses.map((business) => {
-                return {
-                    id: business.id,
-                    imageSrc: business.image_url,
-                    name: business.name,
-                    address: business.location.display_address.join(' '),
-                    city: business.city,
-                    state: business.state,
-                    zipCode: business.zip_code,
-                    category: business.categories,
-                    rating: business.rating,
-                    reviewCount: business.review_cout,
-                };
-            });
-        }
+        const res = await req.json();
+
+        return res;
     },
 };
-
-
-*/

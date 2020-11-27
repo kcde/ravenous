@@ -1,18 +1,27 @@
 import React from 'react';
 import './SearchBar.css';
+import { Autocomplete } from '../autocomplete/autocomplete';
+
+import { Yelp } from '../../util/yelp';
 
 class SearchBar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { term: '', location: '', sortBy: 'best_match' };
+        this.state = {
+            term: '',
+            location: '',
+            sortBy: 'best_match',
+            'autocomplete suggestions': [],
+        };
         this.handleTermChange = this.handleTermChange.bind(this);
         this.handleLocationChange = this.handleLocationChange.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
+        this.handleAutocompleteClick = this.handleAutocompleteClick.bind(this);
         this.sortByOptions = {
             'Best Match': 'best_match',
             'Highest Rated': 'rating',
             'Most Reviewed': 'review_count',
-            Distance: 'distance',
+            Distance: 'distance&radius=3000',
         };
     }
 
@@ -24,12 +33,27 @@ class SearchBar extends React.Component {
         this.handleSearch();
     }
 
+    // handleLocationClick(){
+    //     Yelp.autocomplete()
+    // }
+
     handleTermChange(e) {
         this.setState({ term: e.target.value });
     }
 
-    handleLocationChange(e) {
+    handleAutocompleteClick(e) {
+        this.setState({ location: e.target.textContent });
+        this.setState({ 'autocomplete suggestions': [] });
+    }
+
+    async handleLocationChange(e) {
         this.setState({ location: e.target.value });
+        let suggestions = await Yelp.autocomplete(e.target.value);
+        const matches = await suggestions.suggestions.filter((suggestion) => {
+            const regex = new RegExp(`^${e.target.value}`, 'gi');
+            return suggestion.title.match(regex);
+        });
+        this.setState({ 'autocomplete suggestions': matches });
     }
 
     handleSearch(e) {
@@ -65,7 +89,19 @@ class SearchBar extends React.Component {
                 <form>
                     <div className="SearchBar-fields">
                         <input placeholder="Search Businesses" onChange={this.handleTermChange} />
-                        <input placeholder="Where?" onChange={this.handleLocationChange} />
+                        <div style={{ position: 'relative' }}>
+                            <input
+                                placeholder="Where?"
+                                onChange={this.handleLocationChange}
+                                onClick={this.handleLocationClick}
+                                value={this.state.location}
+                            />
+
+                            <Autocomplete
+                                suggestions={this.state['autocomplete suggestions']}
+                                handleClick={this.handleAutocompleteClick}
+                            />
+                        </div>
                     </div>
                     <div className="SearchBar-submit">
                         <button type="submit" key="submit" onClick={this.handleSearch}>
